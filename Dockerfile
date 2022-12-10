@@ -1,20 +1,14 @@
-# Use the official Python image as the base image
-FROM python:3
+FROM python:3-slim
 
-# Set the working directory to /app
 WORKDIR /app
 
-# Copy the requirements.txt file to the working directory
 COPY requirements.txt .
 
-# Install the dependencies from requirements.txt
+RUN apt-get update
+RUN apt-get install -y libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6
+
 RUN pip install -r requirements.txt
 
-# Copy the source code to the working directory
-COPY . .
+COPY system-hardware-info.py .
 
-# Compile the Python code using the Makefile
-RUN make
-
-# Run the executable when the container starts
-CMD ["./system-hardware-info"]
+CMD ["python", "system-hardware-info.py"]
