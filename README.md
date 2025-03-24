@@ -13,7 +13,7 @@ A Python application that displays real-time system hardware information using a
 
 ## Screenshots
 
-(Screenshots would be added here when available)
+![System Hardware Info Screenshot](screenshots/app_screenshot.png)
 
 ## Dependencies
 
@@ -31,14 +31,25 @@ A Python application that displays real-time system hardware information using a
    cd system-hardware-info
    ```
 
-2. Install the dependencies:
+2. Create and activate a virtual environment (recommended):
+   ```bash
+   python -m venv venv
+   
+   # On Windows
+   venv\Scripts\activate
+   
+   # On macOS/Linux
+   source venv/bin/activate
+   ```
+
+3. Install the dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Run the application:
+4. Run the application:
    ```bash
-   python system-hardware-info.py
+   python main.py
    ```
 
 ### Using Docker
@@ -52,7 +63,6 @@ A Python application that displays real-time system hardware information using a
    ```bash
    docker run --rm -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix system-hardware-info
    ```
-
    Note: Running GUI applications in Docker requires X11 forwarding to be properly set up on your host system.
 
 ## Usage
@@ -77,17 +87,56 @@ The application displays system information in three main sections:
 
 Information is automatically refreshed every 2 seconds, or you can click the "Refresh Information" button to update manually.
 
-## Development
+## Project Structure
 
-### Project Structure
-
-- `system-hardware-info.py` - Main application code
+- `main.py` - Application entry point
+- `src/` - Source code directory
+  - `ui/` - User interface components
+  - `collectors/` - System information collectors
+  - `utils/` - Utility functions and configuration
+- `tests/` - Unit tests
 - `requirements.txt` - Python dependencies
 - `Dockerfile` - Docker configuration for containerized deployment
+
+## Troubleshooting
+
+### Common Issues
+
+1. **PyQt5 Installation Errors**:
+   - On Linux, you may need to install additional packages: `sudo apt-get install python3-pyqt5`
+   - On Windows, try using a pre-built wheel: `pip install PyQt5==5.15.9`
+
+2. **Permission Errors for Disk Information**:
+   - Some disk partitions may not be accessible due to permission restrictions
+   - Run the application with elevated privileges if needed
+
+3. **Display Issues in Docker**:
+   - Ensure X11 forwarding is properly configured
+   - Try setting the DISPLAY environment variable correctly
+
+## Development
+
+### Running Tests
+
+```bash
+pytest
+```
+
+For test coverage report:
+
+```bash
+pytest --cov=src
+```
 
 ### Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
